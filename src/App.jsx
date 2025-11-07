@@ -1,28 +1,20 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import SplashScreen from './components/SplashScreen';
+import Onboarding from './components/Onboarding';
+import Auth from './components/Auth';
+import MainApp from './components/MainApp';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [stage, setStage] = useState('splash');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
+    <div className="min-h-screen w-full flex items-center justify-center bg-[conic-gradient(at_top_left,_#ffffff,_#EFFFFD_40%,_#CFFAF5_100%)] text-gray-900">
+      <div className="w-[min(420px,95vw)] h-[880px] border border-white/60 rounded-[40px] shadow-[0_30px_80px_rgba(0,0,0,0.12)] overflow-hidden">
+        {stage === 'splash' && <SplashScreen onFinish={() => setStage('onboarding')} />}
+        {stage === 'onboarding' && <Onboarding onFinish={() => setStage('auth')} />}
+        {stage === 'auth' && <Auth onAuth={() => setStage('main')} />}
+        {stage === 'main' && <MainApp />}
       </div>
     </div>
-  )
+  );
 }
-
-export default App
